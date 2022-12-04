@@ -1,6 +1,6 @@
 package code;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class DancingLinksAlgorithm {
     private static final int BOARD_SIZE = 9;
@@ -11,21 +11,49 @@ public class DancingLinksAlgorithm {
     private static final int MAX_VALUE = 9;
     private static final int COVER_START_INDEX = 1;
 
-    private static int[][] board = {
-            {8, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 3, 6, 0, 0, 0, 0, 0},
-            {0, 7, 0, 0, 9, 0, 2, 0, 0},
-            {0, 5, 0, 0, 0, 7, 0, 0, 0},
-            {0, 0, 0, 0, 4, 5, 7, 0, 0},
-            {0, 0, 0, 1, 0, 0, 0, 3, 0},
-            {0, 0, 1, 0, 0, 0, 0, 6, 8},
-            {0, 0, 8, 5, 0, 0, 0, 1, 0},
-            {0, 9, 0, 0, 0, 0, 4, 0, 0}
-    };
+//    private static int[][] board = {
+//            {8, 0, 0, 0, 0, 0, 0, 0, 0},
+//            {0, 0, 3, 6, 0, 0, 0, 0, 0},
+//            {0, 7, 0, 0, 9, 0, 2, 0, 0},
+//            {0, 5, 0, 0, 0, 7, 0, 0, 0},
+//            {0, 0, 0, 0, 4, 5, 7, 0, 0},
+//            {0, 0, 0, 1, 0, 0, 0, 3, 0},
+//            {0, 0, 1, 0, 0, 0, 0, 6, 8},
+//            {0, 0, 8, 5, 0, 0, 0, 1, 0},
+//            {0, 9, 0, 0, 0, 0, 4, 0, 0}
+//    };
 
     public static void main(String[] args) {
+        int [][ ] board = ParseInput(getInput());
         DancingLinksAlgorithm solver = new DancingLinksAlgorithm();
         solver.solve(board);
+
+    }
+
+    private static String getInput() {
+        StringBuilder input = new StringBuilder();
+        Scanner sc = new Scanner(System.in);
+        for (int i = 0; i <9 ; i++) {
+            input.append(sc.nextLine()).append("\n");
+        }
+        return input.toString();
+    }
+
+    private static int[][] ParseInput(String input) {
+        String[] rows = input.split("\n");
+
+        int [][] matrix = new int[9][9];
+
+        for (int i = 0; i < rows.length ; i++) {
+            String[] line = rows[i].split(",");
+            for (int j = 0; j < 9; j++) {
+                String item = line[j];
+                if(!item.equals(" ")) matrix[i][j] = Integer.parseInt(item);
+                else matrix[i][j] = 0;
+            }
+        }
+
+        return matrix;
     }
 
     //MainSolvingAlgorithm
@@ -33,6 +61,8 @@ public class DancingLinksAlgorithm {
         boolean[][] cover = initializeExactCoverBoard(board);
         DancingLinks dlx = new DancingLinks(cover);
         dlx.runSolver();
+        System.out.println(dlx.getSolutions().size());
+
     }
 
     private int getIndex(int row, int column, int num) {

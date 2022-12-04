@@ -8,6 +8,11 @@ public class DancingLinks {
     private ColumnNode header;
     private List<DancingNode> answer;
 
+    private List<String> solutions;
+
+
+
+
     private void search(int k) {
         if (header.R == header) {
             handleSolution(answer);
@@ -82,6 +87,7 @@ public class DancingLinks {
 
     DancingLinks(boolean[][] cover) {
         header = makeDLXBoard(cover);
+        this.solutions = new ArrayList<>();
     }
 
     public void runSolver() {
@@ -118,15 +124,27 @@ public class DancingLinks {
         return result;
     }
 
-    private static void printSolution(int[][] result) {
+    private void printSolution(int[][] result) {
+        StringBuilder sol = new StringBuilder();
         int size = result.length;
         for (int[] aResult : result) {
             StringBuilder ret = new StringBuilder();
             for (int j = 0; j < size; j++) {
                 ret.append(aResult[j]).append(" ");
             }
-            System.out.println(ret);
+            //System.out.println(ret);
+            sol.append(ret).append("\n");
+
         }
-        System.out.println();
+        //System.out.println();
+        this.solutions.add(sol.toString());
+    }
+
+    public List<String> getSolutions() {
+        return solutions;
+    }
+
+    public void setSolutions(List<String> solutions) {
+        this.solutions = solutions;
     }
 }
